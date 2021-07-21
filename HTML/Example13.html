@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style type="text/css">
+p {color: red;}
+body {font-family: Arial;
+font-size: 18px;
+color: black;
+background: rose;
+margin: 10px;}
+input {color:green;
+font-size: 10px;}
+</style>
+<title>Covid Vaccintion Details</title>
+</head>
+<body>
+<form action="Example13.1.html">
+<div align="center">
+<h1>Covid Vaccination Details</h1>
+Enter your name:
+<input type="text" name="UserName" size=35 maxlength=35 value="">
+</br></br>
+Enter your DOB:
+<input type="date" id="birthday" size=35 maxlength=35 value=""> </br> </br>
+Enter your Phone Number:
+<input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"> </br> </br>
+Covid Vaccine Registration
+<p>
+<input type="checkbox" name="First Dose">Dose 1    
+  <input type="checkbox" name="Second Dose">Dose 2
+</p>
+Available Dates:
+<select date="Dates" ><option>
+<option value=1 selected = "true">13-07-2021
+<option value=2 >14-07-2021
+<option value=3 >15-07-2021
+<option value=4 >16-07-2021
+<option value=5 >17-07-2021
+</select>
+</br></br>
+<input type=submit value="SUBMIT">
+</div>
+</form>
+</body>
+</html>

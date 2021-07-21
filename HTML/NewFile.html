@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h2>Block Scope JS const variables</h2>
+<p id="demo"></p>
+<script>
+const x = 10;
+{
+
+    const x = 2;
+}
+document.getElementById("demo").innerHTML="x is "+ x;
+</script>
+</body>
+</html>
