@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<head>
+<title>
+AngularJs ng-repeat Directive Example
+</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body >
+<div ng-app="" ng-init="employees=['Sanju','Abhinaya','Jossy','Gireesh','Deepu']">
+<p>Employee Details:</p>
+<ul>
+<li ng-repeat="name in employees">
+{{ name }}
+</li>
+</ul>
+</div>
+</body>
+</html>
