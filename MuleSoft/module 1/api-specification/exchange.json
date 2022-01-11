@@ -1,0 +1,12 @@
+{
+  "main" : "account.API.raml",
+  "name" : "API Specification",
+  "classifier" : "raml",
+  "tags" : [ ],
+  "groupId" : "7369e49e-3859-4b5d-9a7f-8c3e7540ae02",
+  "assetId" : "api-specification",
+  "version" : "1.0.1",
+  "apiVersion" : "v1",
+  "dependencies" : [ ],
+  "originalFormatVersion" : "1.0"
+}
