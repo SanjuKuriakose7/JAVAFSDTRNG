@@ -42,3 +42,20 @@ types:
           application/json:
             example:
               message: Accounts created(but not really)
+              
+  /{id}:
+    get:
+      headers:
+        user_id:
+      responses:
+        200:
+          body:
+            application/json:
+              type: Account
+              examples:
+                output: !include examples/Account.raml
+        404:
+          body:
+            application/json:
+              example:
+                message: Account not found

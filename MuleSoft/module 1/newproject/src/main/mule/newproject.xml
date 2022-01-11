@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e1f79229-3fb3-4670-b9df-f2451426f93c" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="a13c2783-2bd5-4ebf-b51a-07fbe32dff6d" >
+		<http:request-connection host="diyaccounts.us-e2.cloudhub.io" />
+	</http:request-config>
+	<flow name="get-accounts-by-name" doc:id="55ca48d4-d504-4da4-90ff-fdf75ec0ba67" >
+		<http:listener doc:name="GET /accounts-by-name" doc:id="3981a2dd-f314-4e72-9542-2abcc424fddd" config-ref="HTTP_Listener_config" path="/accounts-by-name" allowedMethods="GET" >
+			<http:response >
+				<http:headers ><![CDATA[#[{
+	number_of_accounts: sizeOf(payload as Array),
+	account_name: vars.accountName,
+	csr_user_id: vars.userId
+}]]]></http:headers>
+			</http:response>
+		</http:listener>
+		<logger level="INFO" doc:name="First Mule Message" doc:id="1fbfc4f9-9895-4f95-a68f-5dc04158a9b1" />
+		<set-variable value="#[attributes.headers.csr_user_id]" doc:name="userId" doc:id="a1d68b96-3f66-4e8b-81ce-66a3fe1e51c7" variableName="userId" />
+		<set-variable value="#[attributes.queryParams.cname]" doc:name="accountName" doc:id="02c39af5-3385-459d-a716-1c63a456cb7e" variableName="accountName" />
+		<http:request method="GET" doc:name="GET accounts by name" doc:id="34ce9863-2cc3-4337-b99b-4594ffc9a244" config-ref="HTTP_Request_configuration" path="/accounts" >
+			<http:headers ><![CDATA[#[{
+	user_id : vars.userId,
+	client_id: "ffb1357c5c7f4ff7ac51cd1d063d5b75",
+	client_secret: "9534E330CE5e404db5B31f0715fF882E"
+}]]]></http:headers>
+			<http:query-params ><![CDATA[#[{
+	account_name: vars.accountName
+}]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="Last Mule Message" doc:id="8b6d0c80-49e2-46ae-a8df-bee4c9190720" />
+	</flow>
+	<flow name="get-accounts-by-type" doc:id="f60dde3b-e2c9-41ca-9346-c62149a93399" >
+		<http:listener doc:name="GET /accounts-by-type" doc:id="5822b6b0-f077-4fef-bc69-cbd56b6364fd" config-ref="HTTP_Listener_config" path="/accounts-by-type" allowedMethods="GET" >
+			<http:response >
+				<http:headers ><![CDATA[#[{
+	number_of_accounts: sizeOf(payload as Array),
+	account_type: vars.accountType,
+	csr_user_id: vars.userId
+}]]]></http:headers>
+			</http:response>
+		</http:listener>
+		<logger level="INFO" doc:name="First Mule Message" doc:id="45a3f755-56f3-4bbc-bc6c-d18af3c7ec2a" />
+		<set-variable value="#[attributes.headers.csr_user_id]" doc:name="userId" doc:id="1e52c856-4e34-4bef-89d0-d027867758b6" variableName="userId" />
+		<set-variable value='#[attributes.queryParams.ctype default "business"]' doc:name="accountType" doc:id="b73a2764-80a4-42b4-a92d-809ca0be6f3c" variableName="accountType" />
+		<http:request method="GET" doc:name="GET accounts by type" doc:id="b9f84c15-4ef1-4578-8790-cc2fa54b264b" config-ref="HTTP_Request_configuration" path="/accounts" >
+			<http:headers ><![CDATA[#[{
+	user_id : vars.userId,
+	client_id: "ffb1357c5c7f4ff7ac51cd1d063d5b75",
+	client_secret: "9534E330CE5e404db5B31f0715fF882E"
+}]]]></http:headers>
+			<http:query-params ><![CDATA[#[{
+	account_type: vars.accountType
+}]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="Last Mule Message" doc:id="6bdf3c54-3688-4ac6-8d7f-e5977df1d952" />
+	</flow>
+	<flow name="post-accounts" doc:id="1561bb4e-90d9-4548-a2f9-8ceb581fa1d7" >
+		<http:listener doc:name="POST /accounts" doc:id="b6377289-0753-4dab-ac86-d4c8f1584d6d" config-ref="HTTP_Listener_config" path="/accounts" allowedMethods="POST" >
+			<http:response >
+				<http:headers ><![CDATA[#[{
+	number_of_accounts: vars.accountsNumber,
+	csr_user_id: vars.userId
+}]]]></http:headers>
+			</http:response>
+		</http:listener>
+		<logger level="INFO" doc:name="First Mule Message" doc:id="c254d3a8-519c-41c3-91e5-83be97656264" />
+		<set-variable value="#[attributes.headers.csr_user_id]" doc:name="userId" doc:id="44cb350c-1e07-4c0d-bf30-fc935183be60" variableName="userId" />
+		<set-variable value="#[sizeOf(payload)]" doc:name="accountsNumber" doc:id="3fdc7e7b-45da-4597-8044-dda3334978d7" variableName="accountsNumber" />
+		<vm:publish doc:id="77459481-c033-4076-8033-ad41a437af6e" doc:name="csr_input_queue" config-ref="CSR_VM_Config" queueName="csr_input_queue">
+			<vm:content><![CDATA[#[output application/json
+---
+{
+	user_id: vars.userId,
+	accounts: payload
+}]]]></vm:content>
+		</vm:publish>
+	</flow>
+</mule>

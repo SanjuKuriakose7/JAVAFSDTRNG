@@ -1,0 +1,17 @@
+db:
+  host: "mudb.learn.mulesoft.com"
+  port: "3306"
+  user: "mule"
+  password: "mule"
+  database: "training"
+
+file:
+  accountsDir: "/Users/180103/Downloads/APDevFundamentals4.4_studentFiles_SP_05oct2021/resources/accounts"
+ 
+accounts:
+  folder:
+    in: "tmp/input/"
+    out: "tmp/output/"
+  filename:
+      prefix: "customer-accounts"
+      ext: ".csv"
